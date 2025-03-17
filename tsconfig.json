@@ -21,6 +21,12 @@
       "@providers/*": [
         "./src/providers/*"
       ],
+      "@lib/*": [
+        "./src/lib/*"
+      ],
+      "@api/*": [
+        "./src/api/*"
+      ],
     }
   },
   "include": [

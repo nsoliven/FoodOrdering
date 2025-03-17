@@ -1,13 +1,14 @@
 import { View, Text , StyleSheet, TextInput, Image, Alert} from 'react-native';
 import Button from '@components/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import * as ImagePicker from 'expo-image-picker';
 
 
 import { defaultPizzaImage } from '@components/ProdcutsListItem';
 import Colors from '@constants/Colors';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { useInsertProduct, useUpdateProduct, useProduct, useDeleteProduct} from '@/src/api/products';
 
 
 const CreateProductScreen = () => {
@@ -16,8 +17,16 @@ const CreateProductScreen = () => {
   const [errors, setErrors] = useState('');
   const [image, setImage] = useState(defaultPizzaImage);
 
-  const { id } = useLocalSearchParams();
+  const router = useRouter();
+
+  const { id: idString } = useLocalSearchParams();
+  const id = parseFloat(typeof idString === 'string' ? idString : idString?.[0]);
   const isUpdating = !!id;
+
+  const { mutate: insertProduct } = useInsertProduct();
+  const { mutate: updateProduct } = useUpdateProduct();
+  const { data: updatingProduct } = useProduct(id);
+  const { mutate: deleteProduct } = useDeleteProduct();
 
   const resetFields = () => {
     setName('');
@@ -25,6 +34,14 @@ const CreateProductScreen = () => {
     setErrors('');
     setImage('');
   };
+
+  useEffect(() => {
+    if (isUpdating) {
+      setName(updatingProduct?.name || '');
+      setPrice(updatingProduct?.price.toString() || '');
+      setImage(updatingProduct?.image || defaultPizzaImage);
+    }
+  }, [updatingProduct]);
 
   const validateInput = () => {
     setErrors('');
@@ -46,7 +63,17 @@ const CreateProductScreen = () => {
   };
 
   const onDelete = () => {
-    
+    deleteProduct(id, {
+      onSuccess: () => {
+        console.log('Product deleted:', id);
+        resetFields();
+        router.replace('/(admin)');
+      },
+      onError: (error) => {
+        console.error('Error deleting product:', error);
+        setErrors(error.message);
+      }
+    })
   };
   const confirmDelete = () => {
     //confirmation
@@ -72,8 +99,26 @@ const CreateProductScreen = () => {
       return;
     }
 
+    updateProduct({
+      id,
+      name,
+      price: parseFloat(price),
+      image: image === defaultPizzaImage ? null : image,
+    },
+    {
+      onSuccess: () => {
+        console.log('Product updated:', { name, price, image });
+        resetFields();
+        router.back();
+      },
+      onError: (error) => {
+        console.error('Error updating product:', error);
+        setErrors(error.message);
+      }
+    }
+
+    );
     console.log('Product updated:', { name, price, image });
-    resetFields();
   }
 
   const onCreate = () => {
@@ -81,7 +126,23 @@ const CreateProductScreen = () => {
       console.warn(errors);
       return;
     }
-    resetFields();
+
+    insertProduct({
+      name,
+      price: parseFloat(price),
+      image: image === defaultPizzaImage ? null : image,
+    },
+    {
+      onSuccess: () => {
+        console.log('Product created:', { name, price, image });
+        resetFields();
+        router.replace('/(admin)');
+      },
+      onError: (error) => {
+        console.error('Error creating product:', error);
+        setErrors(error.message);
+      }
+    });
   };
 
   const pickImage = async () => {

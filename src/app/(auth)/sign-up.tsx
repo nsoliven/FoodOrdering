@@ -1,18 +1,26 @@
-import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import Button from '@components/Button';
 import { useState } from 'react';
 import Colors from '@constants/Colors';
-import { Stack, Link } from 'expo-router';
+import { router, Stack } from 'expo-router';
 
-const LoginScreen = () => {
+import supabase from '@lib/supabase';
+
+
+const SignUpScreen = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [loading, setLoading] = useState(false);
+
   const [errors, setErrors] = useState('');
 
   const validateInput = () => {
     setErrors('');
-    if (!email || !password) {
-      setErrors('Email and password are required');
+    if (!name || !email || !password || !confirmPassword) {
+      setErrors('All fields are required');
       return false;
     }
 
@@ -28,16 +36,37 @@ const LoginScreen = () => {
       return false;
     }
 
+    if (password !== confirmPassword) {
+      setErrors('Passwords do not match');
+      return false;
+    }
+
     return true;
   };
 
-  const onLogin = () => {
+  async function signUpWithEmail() {
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      setErrors(error.message);
+    } else {
+      Alert.alert('Success', 'Account created successfully');
+    }
+    setLoading(false);
+  }
+
+  const onSignUp = async () => {
     if (!validateInput()) {
       return;
     }
     
-    // Here you would handle the authentication logic
-    console.log('Logging in with:', { email, password });
+    // Here you would handle the sign-up logic
+    console.log('Signing up with:', { name, email, password });
+    await signUpWithEmail();
   };
 
   return (
@@ -45,12 +74,21 @@ const LoginScreen = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <Stack.Screen options={{ title: 'Login' }} />
+      <Stack.Screen options={{ title: 'Sign Up' }} />
       
       <View style={styles.formContainer}>
-        <Text style={styles.title}>Welcome Back</Text>
-        <Text style={styles.subtitle}>Login to your account</Text>
+        <Text style={styles.title}>Create Account</Text>
+        <Text style={styles.subtitle}>Sign up to get started</Text>
         
+        <Text style={styles.label}>Full Name</Text>
+        <TextInput
+          value={name}
+          onChangeText={setName}
+          placeholder="John Doe"
+          style={styles.input}
+          autoCapitalize="words"
+        />
+
         <Text style={styles.label}>Email</Text>
         <TextInput
           value={email}
@@ -70,15 +108,28 @@ const LoginScreen = () => {
           secureTextEntry
         />
 
+        <Text style={styles.label}>Confirm Password</Text>
+        <TextInput
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          placeholder="Confirm password"
+          style={styles.input}
+          secureTextEntry
+        />
+
         {errors ? <Text style={styles.error}>{errors}</Text> : null}
         
-        <Button text="Login" onPress={onLogin} />
+        <Button 
+          text={loading ? "Creating Account.." : "Sign Up"} 
+          onPress={onSignUp} 
+          disabled={loading}
+        />
         
-        <Text style={styles.forgotPassword}>Forgot password?</Text>
-        
-        <View style={styles.signupContainer}>
-          <Text style={styles.signupText}>Don't have an account? </Text>
-          <Text style={styles.signupLink}>Sign up</Text>
+        <View style={styles.loginContainer}>
+          <Text style={styles.loginText}>Already have an account? </Text>
+          <Text onPress={() => {
+              router.push('./');
+          }} style={styles.loginLink}>Login</Text>
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -124,24 +175,18 @@ const styles = StyleSheet.create({
     color: 'red',
     marginBottom: 10,
   },
-  forgotPassword: {
-    alignSelf: 'center',
-    fontWeight: 'bold',
-    color: Colors.light.tint,
-    marginTop: 15,
-  },
-  signupContainer: {
+  loginContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 20,
   },
-  signupText: {
+  loginText: {
     color: 'gray',
   },
-  signupLink: {
+  loginLink: {
     fontWeight: 'bold',
     color: Colors.light.tint,
   },
 });
 
-export default LoginScreen;
+export default SignUpScreen;
