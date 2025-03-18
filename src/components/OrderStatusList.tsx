@@ -1,23 +1,26 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { OrderStatus, OrderStatusList as Statuses } from '@src/types';
 import Colors from '@constants/Colors';
 
 type OrderStatusListProps = {
   status: OrderStatus;
+  onStatusChange?: (status: OrderStatus) => void;
 };
 
-const OrderStatusList = ({ status }: OrderStatusListProps) => {
+const OrderStatusList = ({ status, onStatusChange }: OrderStatusListProps) => {
   return (
     <View style={styles.container}>
       {Statuses.map((s) => (
-        <View 
+        <Pressable 
           key={s} 
+          onPress={() => onStatusChange && onStatusChange(s)}
           style={[
             styles.statusContainer,
             {
               backgroundColor: s === status ? Colors.light.tint : '#f0f0f0',
             },
           ]}
+          disabled={!onStatusChange}
         >
           <Text 
             style={[
@@ -27,7 +30,7 @@ const OrderStatusList = ({ status }: OrderStatusListProps) => {
           >
             {s}
           </Text>
-        </View>
+        </Pressable>
       ))}
     </View>
   );
