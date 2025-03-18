@@ -23,9 +23,6 @@ const OrderListItem = ({ order }: OrderListItemProps) => {
         </View>
         
         <View style={styles.contentContainer}>
-          <Text style={styles.productCount}>
-            {order.order_items?.length || 0} {order.order_items?.length === 1 ? 'item' : 'items'}
-          </Text>
           <Text style={styles.status}>{order.status}</Text>
         </View>
         

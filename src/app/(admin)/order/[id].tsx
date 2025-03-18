@@ -3,7 +3,6 @@ import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'expo-router';
 import OrderItemListItem from '@components/OrderItemListItem';
 import OrderStatusList from '@components/OrderStatusList';
-import { useMemo } from 'react';
 import dayjs from 'dayjs';
 import Colors from '@constants/Colors';
 
