@@ -10,9 +10,6 @@ const index = () => {
   const { session, loading, isAdmin } = useAuth();
 
   if(loading) return <ActivityIndicator />;
-
-  console.log('isAdmin', isAdmin);
-
   if(!session) return <Redirect href={'/(auth)/sign-in'} />;
   if(!isAdmin) return <Redirect href={'/(user)'} />;
 

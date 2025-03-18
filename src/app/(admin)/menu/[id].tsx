@@ -8,22 +8,25 @@ import { FontAwesome } from '@expo/vector-icons';
 
 // Data and types
 import { defaultPizzaImage } from '@components/ProdcutsListItem';
-import { PizzaSize } from '@/src/types';
+import { PizzaSize } from '@src/types';
 import Colors from '@constants/Colors';
 
 // Providers
-import { useCart } from '@/src/providers/CartProvider';
-import { useProduct } from '@/src/api/products';
+import { useCart } from '@providers/CartProvider';
+import { useProduct } from '@api/products';
 
 const ProductDetailsScreen = () => {
+  // Move ALL hooks to the top level before any conditional returns
   const { id: idString } = useLocalSearchParams();
   const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
   const { data: product, isLoading, error } = useProduct(id);
-
   const { addItem } = useCart();
   const [selectedSize, setSelectedSize] = useState<PizzaSize>('M'); // Default size
   const router = useRouter();
 
+  // Conditional returns after all hooks have been called
+  if (isLoading) return <ActivityIndicator />;
+  if (error) return <Text>Failed to fetch product</Text>;
   if (!product) {
     return (
       <View style={styles.container}>
@@ -32,11 +35,7 @@ const ProductDetailsScreen = () => {
     );
   }
 
-  if (isLoading) return <ActivityIndicator />;
-  if (error) return <Text>Failed to fetch product</Text>;
-
   const addToCart = () => {
-    if (!product) return;
     addItem(product, selectedSize);
     router.push('/cart');
   };
@@ -71,6 +70,7 @@ const ProductDetailsScreen = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: 'bold',
-
   },
 });
 

@@ -1,14 +1,17 @@
 import { createContext, PropsWithChildren, ReactNode, useContext } from "react";
-import { CartItem, Product } from "../types";
+import { CartItem, Tables } from "@src/types";
 import { useState , useEffect } from "react";
 import { randomUUID } from 'expo-crypto';
-
+import { useInsertOrder } from "@api/orders";
+import { useInsertOrderItems } from "@api/order-items";
+import { useRouter } from "expo-router";
 
 type CartType = {
   items: CartItem[];
-  addItem: (product: Product, size: CartItem['size']) => void;
+  addItem: (product: Tables<'products'>, size: CartItem['size']) => void;
   updateQuantity: (itemId: string, amount: 1 | -1) => void;
   total: number;
+  checkout: () => void;
 };
 
 // add initial value to remove error
@@ -17,6 +20,7 @@ const CartContext = createContext<CartType>({
   addItem: () => {},
   updateQuantity: () => {},
   total: 0,
+  checkout: () => {},
 });
 
 export default function CartProvider({ children }: PropsWithChildren) {
@@ -27,7 +31,12 @@ export default function CartProvider({ children }: PropsWithChildren) {
     0
   );
 
-  const addItem = (product: Product, size: CartItem['size']) => {
+  const router = useRouter();
+
+  const { mutate: insertOrder } = useInsertOrder();
+  const { mutate: insertOrderItems } = useInsertOrderItems();
+
+  const addItem = (product: Tables<'products'>, size: CartItem['size']) => {
     const existingItem = items.find(
       (item) => item.product.id === product.id && item.size === size
     );
@@ -59,9 +68,52 @@ export default function CartProvider({ children }: PropsWithChildren) {
     );
   };
 
+  const clearCart = () => {
+    setItems([]);
+  };
+
+  const checkout = () => {
+    insertOrder(
+      { 
+        total, 
+        user_id: 'blank', // automatically overriden in insertOrder
+      },
+      {
+        onSuccess: saveOrderItems,
+        onError: (error) => {
+          console.error("Error inserting order:", error);
+        },
+      }
+    );
+  }
+
+  const saveOrderItems = (order: Tables<'orders'>) => {
+
+    const orderItems = items.map((cartItem) => ({
+      order_id: order.id,
+      product_id: cartItem.product_id,
+      quantity: cartItem.quantity,
+      size: cartItem.size,
+    }));
+
+    insertOrderItems(
+      orderItems,
+      {
+        onSuccess: () => {
+          clearCart(); 
+          router.push('../(user)/order');
+          console.log("Order items inserted successfully");
+        },
+        onError: (error) => {
+          console.error("Error inserting order items:", error);
+        },
+      }
+    );
+  
+  }
 
   return (
-    <CartContext.Provider value={{ items, addItem, updateQuantity, total }}>
+    <CartContext.Provider value={{ items, addItem, updateQuantity, total, checkout }}>
       {children}
     </CartContext.Provider>
   );

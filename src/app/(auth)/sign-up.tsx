@@ -63,9 +63,6 @@ const SignUpScreen = () => {
     if (!validateInput()) {
       return;
     }
-    
-    // Here you would handle the sign-up logic
-    console.log('Signing up with:', { name, email, password });
     await signUpWithEmail();
   };
 

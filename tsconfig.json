@@ -3,9 +3,6 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ],
       "@components/*": [
         "./src/components/*"
       ],
@@ -14,9 +11,6 @@
       ],
       "@constants/*": [
         "./src/constants/*"
-      ],
-      "@src/*": [
-        "./src/*"
       ],
       "@providers/*": [
         "./src/providers/*"
@@ -27,6 +21,9 @@
       "@api/*": [
         "./src/api/*"
       ],
+      "@src/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'expo-router';
 import orders from '@assets/data/orders';
@@ -6,23 +6,18 @@ import OrderItemListItem from '@components/OrderItemListItem';
 import OrderStatusList from '@components/OrderStatusList';
 import { useMemo } from 'react';
 import dayjs from 'dayjs';
-import Colors from '@/src/constants/Colors';
+import Colors from '@constants/Colors';
+
+import { useOrderDetails } from '@api/orders';
 
 
 export default function OrderDetailScreen() {
-  const { id } = useLocalSearchParams();
+  const { id: idString } = useLocalSearchParams();
+  const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
+  const { data: order, isLoading, error } = useOrderDetails(id);
   
-  const order = useMemo(() => {
-    return orders.find((o) => o.id.toString() === id);
-  }, [id]);
-
-  if (!order) {
-    return (
-      <View style={styles.container}>
-        <Text>Order not found</Text>
-      </View>
-    );
-  }
+  if (isLoading) return <ActivityIndicator />;
+  if (error) return <Text>{error.message}</Text>;
 
   return (
     <View style={styles.container}>

@@ -1,23 +1,21 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { Order } from '@/src/types';
+import { Tables } from '@src/types';
 import { Link, useSegments } from 'expo-router';
-import Colors from '@/src/constants/Colors';
+import Colors from '@constants/Colors';
 import dayjs from 'dayjs';
 
 type OrderListItemProps = {
-  order: Order;
+  order: Tables<'orders'>;
 };
 
 const OrderListItem = ({ order }: OrderListItemProps) => {
 
   // routing fix
   const segments = useSegments();
-  console.log(segments);
   const isAdmin = segments[0] == '(admin)';
 
   return (
-    
-    <Link href={ isAdmin ? `../order/${order.id}` : `./order/${order.id}`} asChild>
+    <Link href={ isAdmin ? `../../order/${order.id}` : `./order/${order.id}`} asChild>
       <Pressable style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.orderId}>Order #{order.id}</Text>

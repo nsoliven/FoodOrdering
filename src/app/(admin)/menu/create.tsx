@@ -8,7 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { defaultPizzaImage } from '@components/ProdcutsListItem';
 import Colors from '@constants/Colors';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { useInsertProduct, useUpdateProduct, useProduct, useDeleteProduct} from '@/src/api/products';
+import { useInsertProduct, useUpdateProduct, useProduct, useDeleteProduct} from '@api/products';
 
 
 const CreateProductScreen = () => {

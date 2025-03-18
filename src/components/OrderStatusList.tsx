@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { OrderStatus, OrderStatusList as Statuses } from '@/src/types';
-import Colors from '@/src/constants/Colors';
+import { OrderStatus, OrderStatusList as Statuses } from '@src/types';
+import Colors from '@constants/Colors';
 
 type OrderStatusListProps = {
   status: OrderStatus;

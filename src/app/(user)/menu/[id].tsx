@@ -1,33 +1,27 @@
 import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { defaultPizzaImage } from '@components/ProdcutsListItem';
-import { PizzaSize } from '@/src/types';
-
+import { PizzaSize } from '@src/types';
 import { Pressable } from 'react-native';
 import Button from '@components/Button';
 import { useState } from 'react';
-
-
 import { useCart } from '@providers/CartProvider';
 import { useProduct } from '@api/products';
 
-
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
-
 const ProductDetailsScreen = () => {
+  // Move ALL hooks to the top level before any conditional returns
   const { id: idString } = useLocalSearchParams();
-
   const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
   const { data: product, isLoading, error } = useProduct(id);
+  const { addItem } = useCart();
+  const router = useRouter();
+  const [selectedSize, setSelectedSize] = useState<PizzaSize>('M'); // Default size
 
+  // Conditional returns after all hooks have been called
   if (isLoading) return <ActivityIndicator />;
   if (error) return <Text>Failed to fetch product</Text>;
-
-  const { addItem } = useCart();
-  const [selectedSize, setSelectedSize] = useState<PizzaSize>('M'); // Default size
-  const router = useRouter();
-
   if (!product) {
     return (
       <View style={styles.container}>
@@ -35,8 +29,8 @@ const ProductDetailsScreen = () => {
       </View>
     );
   }
+
   const addToCart = () => {
-    if (!product) return;
     addItem(product, selectedSize);
     router.push('/cart');
   };
@@ -79,6 +73,7 @@ const ProductDetailsScreen = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
