@@ -51,8 +51,7 @@ export default function OrderDetailScreen() {
         <Text style={styles.date}>{dayjs(order.created_at).format('MMM D, YYYY h:mm A')}</Text>
       </View>
 
-      <OrderStatusList status={order.status} onStatusChange={updateStatus} />
-
+      <OrderStatusList status={order.status as OrderStatus} onStatusChange={updateStatus} />
       <Text style={styles.sectionTitle}>Items</Text>
       <FlatList
         data={order.order_items}
