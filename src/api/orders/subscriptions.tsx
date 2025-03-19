@@ -1,4 +1,4 @@
-import supabase from "@lib/supabase";
+import supabase from "@lib/client/supabase";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 

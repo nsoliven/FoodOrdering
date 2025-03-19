@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '@constants/Colors';
 
 import { useAuth } from '@providers/AuthProvider';
-import supabase from '@lib/supabase';
+import supabase from '@lib/client/supabase';
 
 const Index = () => {
   const { session, loading, isAdmin } = useAuth();

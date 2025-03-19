@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
-import { supabase } from '@lib/supabase'
+import { supabase } from '@lib/client/supabase'
 import { Session } from '@supabase/supabase-js';
 import { Profile } from '../types'; // Import the proper Profile type
 

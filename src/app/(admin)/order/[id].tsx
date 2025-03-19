@@ -9,7 +9,7 @@ import Colors from '@constants/Colors';
 import { OrderStatus, OrderStatusList as OrderStatusListTypes } from '@src/types';
 import { useOrderDetails, useUpdateOrder } from '@api/orders';
 import { useUpdateOrderSubscription } from '@api/orders/subscriptions';
-import { notifyUserAboutOrderUpdate } from '@lib/notifications';
+import { notifyUserAboutOrderUpdate } from '@lib/client/notifications';
 
 export default function OrderDetailScreen() {
   const { id: idString } = useLocalSearchParams();

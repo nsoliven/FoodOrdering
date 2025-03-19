@@ -5,7 +5,7 @@ import { randomUUID } from 'expo-crypto';
 import { useInsertOrder } from "@api/orders";
 import { useInsertOrderItems } from "@api/order-items";
 import { useRouter } from "expo-router";
-import { initializePaymentSheet, openPaymentSheet } from "@lib/stripe";
+import { initializePaymentSheet, openPaymentSheet } from "@lib/client/stripe";
 
 type CartType = {
   items: CartItem[];

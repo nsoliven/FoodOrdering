@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Colors from '@constants/Colors';
 import { router, Stack } from 'expo-router';
 
-import supabase from '@lib/supabase';
+import supabase from '@lib/client/supabase';
 
 
 const SignUpScreen = () => {

@@ -12,7 +12,7 @@ import { useInsertProduct, useUpdateProduct, useProduct, useDeleteProduct} from 
 
 import { randomUUID } from 'expo-crypto';
 import * as FileSystem from 'expo-file-system';
-import { supabase } from '@lib/supabase';
+import { supabase } from '@lib/client/supabase';
 import { decode } from 'base64-arraybuffer';
 import RemoteImage from '@components/RemoteImage';
 

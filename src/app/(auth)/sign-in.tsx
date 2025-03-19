@@ -7,7 +7,7 @@ import Button from '@components/Button';
 import { useState } from 'react';
 import Colors from '@constants/Colors';
 import { Stack, Link, router } from 'expo-router';
-import supabase from '@lib/supabase';
+import supabase from '@lib/client/supabase';
 
 
 const LoginScreen = () => {

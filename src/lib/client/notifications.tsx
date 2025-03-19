@@ -4,7 +4,7 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { Order, Profile, Tables } from '@src/types';
-import supabase from './supabase';
+import supabase from '@lib/client/supabase';
 
 import { OrderStatus, } from '@src/types';
 
