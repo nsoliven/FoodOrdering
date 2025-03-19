@@ -17,6 +17,8 @@ const ProductDetailsScreen = () => {
   const { id: idString } = useLocalSearchParams();
   const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
   const { data: product, isLoading, error } = useProduct(id);
+
+
   const { addItem } = useCart();
   const router = useRouter();
   const [selectedSize, setSelectedSize] = useState<PizzaSize>('M'); // Default size

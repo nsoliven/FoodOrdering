@@ -1,4 +1,5 @@
 import supabase from "@lib/supabaseServer";
+import { requireAdmin } from "@lib/authUtilsServer";
 
 // Get a single product by ID
 export async function GET(request: Request) {
@@ -10,6 +11,7 @@ export async function GET(request: Request) {
     console.log('Fetching product with ID:', id);
     console.log('Request URL:', request.url);
     
+    // No authentication required for viewing a product
     const {data, error} = await supabase
       .from('products')
       .select('*')
@@ -38,6 +40,18 @@ export async function GET(request: Request) {
 // Update a product
 export async function PUT(request: Request) {
   try {
+    // Check if user is admin
+    const { authorized, error: authError } = await requireAdmin(request);
+
+    console.log('Updating product');
+    console.log('Request URL:', request.url);
+    
+    if (!authorized) {
+      return Response.json({ 
+        error: authError || "Unauthorized" 
+      }, { status: 401 });
+    }
+    
     // Extract ID from URL pathname
     const url = new URL(request.url);
     const id = parseInt(url.pathname.split('/').pop() || '0');
@@ -94,6 +108,15 @@ export async function PUT(request: Request) {
 // Delete a product
 export async function DELETE(request: Request) {
   try {
+    // Check if user is admin
+    const { authorized, error: authError } = await requireAdmin(request);
+    
+    if (!authorized) {
+      return Response.json({ 
+        error: authError || "Unauthorized" 
+      }, { status: 401 });
+    }
+    
     // Extract ID from URL pathname
     const url = new URL(request.url);
     const id = parseInt(url.pathname.split('/').pop() || '0');

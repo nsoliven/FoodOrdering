@@ -1,4 +1,5 @@
 import supabase from "@lib/supabaseServer";
+import { requireAdmin, requireAuth } from "@lib/authUtilsServer";
 
 // Get all products
 export async function GET(request: Request) {
@@ -6,6 +7,7 @@ export async function GET(request: Request) {
     console.log('Fetching all products');
     console.log('Request URL:', request.url);
     
+    // No authentication required for listing products
     const {data, error} = await supabase
       .from('products')
       .select('*');
@@ -30,6 +32,15 @@ export async function POST(request: Request) {
   try {
     console.log('Creating new product');
     console.log('Request URL:', request.url);
+    
+    // Check if user is admin
+    const { authorized, error: authError } = await requireAdmin(request);
+    
+    if (!authorized) {
+      return Response.json({ 
+        error: authError || "Unauthorized" 
+      }, { status: 401 });
+    }
     
     let body;
     try {
