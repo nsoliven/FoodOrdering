@@ -9,6 +9,7 @@ import 'react-native-reanimated';
 import CartProvider from '@providers/CartProvider';
 import AuthProvider from '@providers/AuthProvider';
 import QueryProvider from '@providers/QueryProvider';
+import NotificationProvider from '@providers/NotificationProvider';
 
 import { useColorScheme } from '@components/useColorScheme';
 
@@ -58,17 +59,19 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <AuthProvider>
         <QueryProvider>
-          <StripeProvider publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!}>
-            <CartProvider>
-              <Stack>
-                <Stack.Screen name="(user)" options={{ headerShown: false }} />
-                <Stack.Screen name="(admin)" options={{ headerShown: false }} />
-                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                <Stack.Screen name="cart" options={{ presentation: 'modal', title: 'Cart' }} />
-                <Stack.Screen name="index" options={{ headerShown: false }} />
-              </Stack>
-            </CartProvider>
-          </StripeProvider>
+          <NotificationProvider>
+            <StripeProvider publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!}>
+              <CartProvider>
+                <Stack>
+                  <Stack.Screen name="(user)" options={{ headerShown: false }} />
+                  <Stack.Screen name="(admin)" options={{ headerShown: false }} />
+                  <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                  <Stack.Screen name="cart" options={{ presentation: 'modal', title: 'Cart' }} />
+                  <Stack.Screen name="index" options={{ headerShown: false }} />
+                </Stack>
+              </CartProvider>
+            </StripeProvider>
+          </NotificationProvider>
         </QueryProvider>
       </AuthProvider>
     </ThemeProvider>
