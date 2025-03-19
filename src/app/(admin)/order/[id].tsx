@@ -9,6 +9,7 @@ import Colors from '@constants/Colors';
 import { OrderStatus, OrderStatusList as OrderStatusListTypes } from '@src/types';
 import { useOrderDetails, useUpdateOrder } from '@api/orders';
 import { useUpdateOrderSubscription } from '@api/orders/subscriptions';
+import { notifyUserAboutOrderUpdate } from '@lib/notifications';
 
 export default function OrderDetailScreen() {
   const { id: idString } = useLocalSearchParams();
@@ -27,11 +28,15 @@ export default function OrderDetailScreen() {
         { text: 'Cancel', style: 'cancel' },
         {
           text: 'OK',
-          onPress: () => {
+          onPress: async () => {
             if (status !== order?.status) {
               updateOrder({
                 id,
                 updatedFields: { status }
+              }, {
+                onSuccess: () => {
+                  if (order) notifyUserAboutOrderUpdate(order, status);
+                }
               });
             }
           },

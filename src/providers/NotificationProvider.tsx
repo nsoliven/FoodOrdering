@@ -4,6 +4,7 @@ import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import * as Notifications from 'expo-notifications';
 import supabase from '@lib/supabase';
 import { useAuth } from './AuthProvider';
+import { Tables } from '@src/types';
 
 const NotificationProvider = ({ children }: PropsWithChildren) => {
   const [expoPushToken, setExpoPushToken] = useState<
