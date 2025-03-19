@@ -46,17 +46,37 @@ const SignUpScreen = () => {
 
   async function signUpWithEmail() {
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
-
+    
     if (error) {
       setErrors(error.message);
-    } else {
+      setLoading(false);
+      return { user: null, error };
+    } 
+    
+    // If signup was successful, update the profile with the name
+    if (data && data.user) {
+      await addProfileData(data.user.id);
       Alert.alert('Success', 'Account created successfully');
     }
+    
     setLoading(false);
+    return { user: data?.user || null, error: null };
+  }
+
+  async function addProfileData(userId: string) {
+    const { error } = await supabase
+      .from('profiles')
+      .update({ full_name: name })
+      .eq('id', userId);
+    
+    if (error) {
+      console.error('Error updating profile:', error.message);
+      setErrors(`Profile update failed: ${error.message}`);
+    }
   }
 
   const onSignUp = async () => {
@@ -77,7 +97,7 @@ const SignUpScreen = () => {
         <Text style={styles.title}>Create Account</Text>
         <Text style={styles.subtitle}>Sign up to get started</Text>
         
-        <Text style={styles.label}>Full Name</Text>
+        <Text style={styles.label}>Name</Text>
         <TextInput
           value={name}
           onChangeText={setName}

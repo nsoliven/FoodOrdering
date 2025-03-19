@@ -1,4 +1,4 @@
-import { View, Text, Platform, FlatList} from 'react-native';
+import { View, Text, Platform, FlatList, Alert} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import Button from '@components/Button';
@@ -8,6 +8,21 @@ import CartListItem from '@components/CartListItem';
 
 const CartScreen = () => {
   const { items, total, checkout } = useCart();
+  
+  const handleCheckout = () => {
+    if (items.length === 0) {
+      Alert.alert(
+        "Empty Cart",
+        "You don't have any items selected in your cart.",
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+    } else {
+      checkout();
+    }
+  };
+  
   return (
     <View style={{ flex: 1, padding: 20 }}>
       <FlatList 
@@ -19,7 +34,7 @@ const CartScreen = () => {
       <Text style={{fontSize: 20, fontWeight: 500 }}>
         Total Price: ${total.toFixed(2)}
       </Text>
-      <Button text="Checkout" onPress={checkout} />
+      <Button text="Checkout" onPress={handleCheckout} />
 
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>

@@ -8,16 +8,22 @@ import { useMemo } from 'react';
 import dayjs from 'dayjs';
 import Colors from '@constants/Colors';
 
-import { useOrderDetails } from '@api/orders';
+import { useOrderDetails, useUpdateOrder } from '@api/orders';
+import { OrderStatus } from '@src/types';
+import { useUpdateOrderSubscription } from '@api/orders/subscriptions';
 
 
 export default function OrderDetailScreen() {
   const { id: idString } = useLocalSearchParams();
   const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
   const { data: order, isLoading, error } = useOrderDetails(id);
+
+  useUpdateOrderSubscription(id);
   
   if (isLoading) return <ActivityIndicator />;
   if (error) return <Text>{error.message}</Text>;
+  if (!order) return <Text>Order not found</Text>;
+
 
   return (
     <View style={styles.container}>
@@ -28,7 +34,7 @@ export default function OrderDetailScreen() {
         <Text style={styles.date}>{dayjs(order.created_at).format('MMM D, YYYY h:mm A')}</Text>
       </View>
 
-      <OrderStatusList status={order.status} />
+      <OrderStatusList status={order.status as OrderStatus} />
 
       <Text style={styles.sectionTitle}>Items</Text>
       <FlatList
