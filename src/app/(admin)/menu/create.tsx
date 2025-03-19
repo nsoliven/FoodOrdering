@@ -12,7 +12,7 @@ import { useInsertProduct, useUpdateProduct, useProduct, useDeleteProduct} from 
 
 import { randomUUID } from 'expo-crypto';
 import * as FileSystem from 'expo-file-system';
-import { supabase } from '@lib/supabase'; // Adjust the path as needed
+import { supabase } from '@lib/supabase';
 import { decode } from 'base64-arraybuffer';
 import RemoteImage from '@components/RemoteImage';
 
@@ -20,7 +20,7 @@ const CreateProductScreen = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [errors, setErrors] = useState('');
-  const [image, setImage] = useState(defaultPizzaImage);
+  const [image, setImage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();

@@ -4,68 +4,17 @@ import Button from '@components/Button';
 import supabase from '@lib/supabase';
 import Colors from '@constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from '@providers/AuthProvider';
+import { Redirect } from 'expo-router';
 
 const ProfileScreen = () => {
-  interface UserProfile {
-    id: string;
-    email: string;
-    last_sign_in_at: string;
-    profile?: {
-      avatar_url?: string | null;
-      full_name?: string | null;
-      group?: string;
-      id?: string;
-      updated_at?: string | null;
-      username?: string | null;
-      website?: string | null;
-    };
-  }
+  // Use the auth context instead of managing authentication state locally
+  const { session, profile, loading: authLoading } = useAuth();
   
-  const [user, setUser] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
+  // Only maintain UI-specific state in the component
   const [loggingOut, setLoggingOut] = useState(false);
   const [showUserId, setShowUserId] = useState(false);
 
-  useEffect(() => {
-    fetchUserProfile();
-  }, []);
-
-  const fetchUserProfile = async () => {
-    try {
-      setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (user) {
-        // Optionally fetch additional profile data from a profiles table
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
-          
-        if (data) {
-          setUser({ 
-            id: user.id, 
-            email: user.email || '', 
-            last_sign_in_at: user.last_sign_in_at || '', 
-            profile: data 
-          });
-        } else {
-          setUser({ 
-            id: user.id, 
-            email: user.email || '', 
-            last_sign_in_at: user.last_sign_in_at || '', 
-            profile: undefined 
-          });
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching profile:', 
-        error instanceof Error ? error.message : error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleLogout = async () => {
     Alert.alert(
@@ -79,7 +28,9 @@ const ProfileScreen = () => {
           onPress: async () => {
             try {
               setLoggingOut(true);
+              // Just sign out - the AuthProvider will handle the session update
               await supabase.auth.signOut();
+              // No navigation needed here - let the app's routing handle this
             } catch (error) {
               console.error('Error logging out:', error instanceof Error ? error.message : error);
               Alert.alert("Error", "Failed to log out. Please try again.");
@@ -96,7 +47,7 @@ const ProfileScreen = () => {
     setShowUserId(prevState => !prevState);
   };
 
-  if (loading) {
+  if (authLoading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={Colors.light.tint} />
@@ -104,6 +55,9 @@ const ProfileScreen = () => {
       </View>
     );
   }
+
+  // Use session data from auth context instead of local user state
+  const user = session?.user;
 
   return (
     <ScrollView style={styles.container}>
@@ -113,9 +67,9 @@ const ProfileScreen = () => {
       
       <View style={styles.profileCard}>
         <View style={styles.avatarContainer}>
-          {user?.profile?.avatar_url ? (
+          {profile?.avatar_url ? (
             <Image 
-              source={{ uri: user.profile.avatar_url }} 
+              source={{ uri: profile.avatar_url }} 
               style={styles.avatar} 
             />
           ) : (
@@ -125,7 +79,7 @@ const ProfileScreen = () => {
           )}
         </View>
         
-        <Text style={styles.name}>{user?.profile?.full_name || user?.email || 'User'}</Text>
+        <Text style={styles.name}>{profile?.full_name || user?.email || 'User'}</Text>
         <Text style={styles.email}>{user?.email}</Text>
       </View>
       
@@ -159,12 +113,14 @@ const ProfileScreen = () => {
           text={loggingOut ? "Logging out..." : "Logout"}
           onPress={handleLogout}
           style={styles.logoutButton}
+          disabled={loggingOut}
         />
       </View>
     </ScrollView>
   );
 };
 
+// Styles remain unchanged
 const styles = StyleSheet.create({
   container: {
     flex: 1,
