@@ -43,7 +43,8 @@
     "react-native-screens": "~4.4.0",
     "react-native-tab-view": "^4.0.5",
     "react-native-url-polyfill": "^2.0.0",
-    "react-native-web": "~0.19.13"
+    "react-native-web": "~0.19.13",
+    "@stripe/stripe-react-native": "0.38.6"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

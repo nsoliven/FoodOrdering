@@ -12,6 +12,8 @@ import QueryProvider from '@providers/QueryProvider';
 
 import { useColorScheme } from '@components/useColorScheme';
 
+import { StripeProvider } from '@stripe/stripe-react-native';
+
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -56,17 +58,18 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <AuthProvider>
         <QueryProvider>
-          <CartProvider>
-            <Stack>
-              <Stack.Screen name="(user)" options={{ headerShown: false }} />
-              <Stack.Screen name="(admin)" options={{ headerShown: false }} />
-              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-              <Stack.Screen name="cart" options={{ presentation: 'modal', title: 'Cart' }} />
-              <Stack.Screen name="index" options={{ headerShown: false }} />
-            </Stack>
-          </CartProvider>
+          <StripeProvider publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!}>
+            <CartProvider>
+              <Stack>
+                <Stack.Screen name="(user)" options={{ headerShown: false }} />
+                <Stack.Screen name="(admin)" options={{ headerShown: false }} />
+                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                <Stack.Screen name="cart" options={{ presentation: 'modal', title: 'Cart' }} />
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+              </Stack>
+            </CartProvider>
+          </StripeProvider>
         </QueryProvider>
-
       </AuthProvider>
     </ThemeProvider>
   );
