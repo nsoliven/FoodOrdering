@@ -15,7 +15,7 @@ const CartScreen = () => {
         "Empty Cart",
         "You don't have any items selected in your cart.",
         [
-          { text: "OK", onPress: () => console.log("OK Pressed") }
+          { text: "OK" }
         ]
       );
     } else {

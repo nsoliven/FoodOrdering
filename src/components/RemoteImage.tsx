@@ -8,8 +8,6 @@ type RemoteImageProps = {
 } & Omit<ComponentProps<typeof Image>, 'source'>;
 
 const RemoteImage = ({ path, fallback, ...imageProps }: RemoteImageProps) => {
-  console.log('path', path);
-  
   const [image, setImage] = useState('');
 
   useEffect(() => {
@@ -20,7 +18,7 @@ const RemoteImage = ({ path, fallback, ...imageProps }: RemoteImageProps) => {
       setImage(path);
       return;
     }
-    
+
     (async () => {
       setImage('');
       const { data, error } = await supabase.storage
@@ -28,7 +26,7 @@ const RemoteImage = ({ path, fallback, ...imageProps }: RemoteImageProps) => {
         .download(path);
 
       if (error) {
-        console.log(error);
+        console.error(error);
       }
 
       if (data) {

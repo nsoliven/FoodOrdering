@@ -102,10 +102,9 @@ export default function CartProvider({ children }: PropsWithChildren) {
         onSuccess: () => {
           clearCart(); 
           router.push('../(user)/order');
-          console.log("Order items inserted successfully");
         },
         onError: (error) => {
-          console.error("Error inserting order items:", error);
+          console.warn("Error inserting order items:", error);
         },
       }
     );
