@@ -1,14 +1,14 @@
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { defaultPizzaImage } from '@components/ProdcutsListItem';
-import { PizzaSize } from '@src/types';
+import { defaultPizzaImage } from '@/components/ProdcutsListItem';
+import { PizzaSize } from '@/types';
 import { Pressable } from 'react-native';
-import Button from '@components/Button';
+import Button from '@/components/Button';
 import { useState } from 'react';
-import { useCart } from '@providers/CartProvider';
-import { useProduct } from '@api/products';
+import { useCart } from '@/providers/CartProvider';
+import { useProduct } from '@/api/products';
 
-import RemoteImage from '@components/RemoteImage';
+import RemoteImage from '@/components/RemoteImage';
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 

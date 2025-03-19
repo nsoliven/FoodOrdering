@@ -1,10 +1,10 @@
-import { registerForPushNotificationsAsync } from '@lib/client/notifications';
+import { registerForPushNotificationsAsync } from '@/lib/client/notifications';
 import { ExpoPushToken } from 'expo-notifications';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import * as Notifications from 'expo-notifications';
-import supabase from '@lib/client/supabase';
+import supabase from '@/lib/client/supabase';
 import { useAuth } from './AuthProvider';
-import { Tables } from '@src/types';
+import { Tables } from '@/types';
 
 const NotificationProvider = ({ children }: PropsWithChildren) => {
   const [expoPushToken, setExpoPushToken] = useState<

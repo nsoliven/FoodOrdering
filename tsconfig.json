@@ -3,25 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@assets/*": [
-        "./assets/*"
-      ],
-      "@constants/*": [
-        "./src/constants/*"
-      ],
-      "@providers/*": [
-        "./src/providers/*"
-      ],
-      "@lib/*": [
-        "./src/lib/*"
-      ],
-      "@api/*": [
-        "./src/api/*"
-      ],
-      "@src/*": [
+      "@/*": [
         "./src/*"
       ]
     }

@@ -2,15 +2,15 @@ import { View, Text, StyleSheet, FlatList, Pressable, ActivityIndicator } from '
 import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'expo-router';
 import orders from '@assets/data/orders';
-import OrderItemListItem from '@components/OrderItemListItem';
-import OrderStatusList from '@components/OrderStatusList';
+import OrderItemListItem from '@/components/OrderItemListItem';
+import OrderStatusList from '@/components/OrderStatusList';
 import { useMemo } from 'react';
 import dayjs from 'dayjs';
-import Colors from '@constants/Colors';
+import Colors from '@/constants/Colors';
 
-import { useOrderDetails, useUpdateOrder } from '@api/orders';
-import { OrderStatus } from '@src/types';
-import { useUpdateOrderSubscription } from '@api/orders/subscriptions';
+import { useOrderDetails, useUpdateOrder } from '@/api/orders';
+import { OrderStatus } from '@/types';
+import { useUpdateOrderSubscription } from '@/api/orders/subscriptions';
 
 
 export default function OrderDetailScreen() {

@@ -1,5 +1,5 @@
-import supabase from "@lib/server/supabaseServer";
-import { requireAdmin, requireAuth } from "@lib/server/authUtils";
+import supabase from "@/lib/server/supabaseServer";
+import { requireAdmin, requireAuth } from "@/lib/server/authUtils";
 
 // Get all products
 export async function GET(request: Request) {

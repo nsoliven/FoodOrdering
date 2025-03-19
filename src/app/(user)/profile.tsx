@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ActivityIndicator, Alert, ScrollView, Pressable } from 'react-native';
-import Button from '@components/Button';
-import supabase from '@lib/client/supabase';
-import Colors from '@constants/Colors';
+import Button from '@/components/Button';
+import supabase from '@/lib/client/supabase';
+import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
-import { useAuth } from '@providers/AuthProvider';
+import { useAuth } from '@/providers/AuthProvider';
 import { Redirect } from 'expo-router';
 
 const ProfileScreen = () => {

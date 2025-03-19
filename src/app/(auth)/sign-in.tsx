@@ -3,11 +3,11 @@
 */
 
 import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform, Alert } from 'react-native';
-import Button from '@components/Button';
+import Button from '@/components/Button';
 import { useState } from 'react';
-import Colors from '@constants/Colors';
+import Colors from '@/constants/Colors';
 import { Stack, Link, router } from 'expo-router';
-import supabase from '@lib/client/supabase';
+import supabase from '@/lib/client/supabase';
 
 
 const LoginScreen = () => {

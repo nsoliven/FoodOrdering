@@ -1,5 +1,5 @@
-import supabase from "@lib/server/supabaseServer";
-import { requireAdmin } from "@lib/server/authUtils";
+import supabase from "@/lib/server/supabaseServer";
+import { requireAdmin } from "@/lib/server/authUtils";
 
 // Get a single product by ID
 export async function GET(request: Request) {

@@ -1,7 +1,7 @@
-import supabase from "@lib/client/supabase";
-import { useAuth } from "@src/providers/AuthProvider";
+import supabase from "@/lib/client/supabase";
+import { useAuth } from "@/providers/AuthProvider";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { InsertTables, UpdateTables } from "@src/types";
+import { InsertTables, UpdateTables } from "@/types";
 
 export const useAdminOrderList = ({ archived = false }) => {
   const Statuses = archived ? ['Delivered'] : ['New', 'Cooking', 'Delivering'];

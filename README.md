@@ -14,3 +14,8 @@ This project is based on a YouTube tutorial. You can follow along with the tutor
 
 6. Index page revamp for when the user is an admin.
 7. Profile page revamp for showing user info.
+
+### Notes on deployment
+```zsh
+npx expo export --platform web
+```

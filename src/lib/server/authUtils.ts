@@ -1,4 +1,4 @@
-import supabase from "@lib/server/supabaseServer";
+import supabase from "@/lib/server/supabaseServer";
 
 export async function getUserFromRequest(request: Request) {
   try {

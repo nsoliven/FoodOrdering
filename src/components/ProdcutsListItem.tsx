@@ -1,12 +1,12 @@
 import { StyleSheet, Pressable} from 'react-native';
-import Colors from '@constants/Colors';
-import { Text } from '@components/Themed';
+import Colors from '@/constants/Colors';
+import { Text } from '@/components/Themed';
 import { Link } from 'expo-router';
-import { Tables } from '@src/types';
+import { Tables } from '@/types';
 
 export const defaultPizzaImage = 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png';
 
-import RemoteImage from '@components/RemoteImage';
+import RemoteImage from '@/components/RemoteImage';
 
 type ProductListItemProps = {
   product: Tables<'products'>;

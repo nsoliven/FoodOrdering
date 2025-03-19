@@ -1,15 +1,15 @@
 import { View, Text, StyleSheet, FlatList, Pressable, ActivityIndicator, Alert } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Stack } from 'expo-router';
-import OrderItemListItem from '@components/OrderItemListItem';
-import OrderStatusList from '@components/OrderStatusList';
+import OrderItemListItem from '@/components/OrderItemListItem';
+import OrderStatusList from '@/components/OrderStatusList';
 import dayjs from 'dayjs';
-import Colors from '@constants/Colors';
+import Colors from '@/constants/Colors';
 
-import { OrderStatus, OrderStatusList as OrderStatusListTypes } from '@src/types';
-import { useOrderDetails, useUpdateOrder } from '@api/orders';
-import { useUpdateOrderSubscription } from '@api/orders/subscriptions';
-import { notifyUserAboutOrderUpdate } from '@lib/client/notifications';
+import { OrderStatus, OrderStatusList as OrderStatusListTypes } from '@/types';
+import { useOrderDetails, useUpdateOrder } from '@/api/orders';
+import { useUpdateOrderSubscription } from '@/api/orders/subscriptions';
+import { notifyUserAboutOrderUpdate } from '@/lib/client/notifications';
 
 export default function OrderDetailScreen() {
   const { id: idString } = useLocalSearchParams();

@@ -1,20 +1,20 @@
 import { View, Text , StyleSheet, TextInput, Alert, ActivityIndicator } from 'react-native';
-import Button from '@components/Button';
+import Button from '@/components/Button';
 import { useEffect, useState } from 'react';
 
 import * as ImagePicker from 'expo-image-picker';
 
 
-import { defaultPizzaImage } from '@components/ProdcutsListItem';
-import Colors from '@constants/Colors';
+import { defaultPizzaImage } from '@/components/ProdcutsListItem';
+import Colors from '@/constants/Colors';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { useInsertProduct, useUpdateProduct, useProduct, useDeleteProduct} from '@api/products';
+import { useInsertProduct, useUpdateProduct, useProduct, useDeleteProduct} from '@/api/products';
 
 import { randomUUID } from 'expo-crypto';
 import * as FileSystem from 'expo-file-system';
-import { supabase } from '@lib/client/supabase';
+import { supabase } from '@/lib/client/supabase';
 import { decode } from 'base64-arraybuffer';
-import RemoteImage from '@components/RemoteImage';
+import RemoteImage from '@/components/RemoteImage';
 
 const CreateProductScreen = () => {
   const [name, setName] = useState('');

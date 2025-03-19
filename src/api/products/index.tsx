@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import supabase from "@lib/client/supabase";
+import supabase from "@/lib/client/supabase";
 
 // Base URL for your API
 const API_URL = "http://localhost:8081/api";

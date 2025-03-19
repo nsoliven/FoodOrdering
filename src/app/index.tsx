@@ -1,12 +1,11 @@
 import { View, Text, ActivityIndicator, StyleSheet, SafeAreaView, Pressable, Alert } from 'react-native';
-import React from 'react';
-import Button from '@components/Button';
+import Button from '@/components/Button';
 import { Link, Redirect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import Colors from '@constants/Colors';
+import Colors from '@/constants/Colors';
 
-import { useAuth } from '@providers/AuthProvider';
-import supabase from '@lib/client/supabase';
+import { useAuth } from '@/providers/AuthProvider';
+import supabase from '@/lib/client/supabase';
 
 const Index = () => {
   const { session, loading, isAdmin } = useAuth();

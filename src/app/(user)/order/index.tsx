@@ -1,6 +1,6 @@
 import { FlatList, Text, View, StyleSheet } from 'react-native';
-import OrderListItem from '@components/OrderListItem';
-import { useMyOrderList } from '@api/orders';
+import OrderListItem from '@/components/OrderListItem';
+import { useMyOrderList } from '@/api/orders';
 import { Ionicons } from '@expo/vector-icons'; // Assuming you're using Expo
 
 export default function OrdersScreen() {

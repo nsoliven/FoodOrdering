@@ -1,4 +1,4 @@
-import Colors from "@constants/Colors";
+import Colors from "@/constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import { Stack } from "expo-router";
 

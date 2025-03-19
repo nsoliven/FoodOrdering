@@ -1,11 +1,11 @@
 import { createContext, PropsWithChildren, ReactNode, useContext } from "react";
-import { CartItem, Tables } from "@src/types";
+import { CartItem, Tables } from "@/types";
 import { useState , useEffect } from "react";
 import { randomUUID } from 'expo-crypto';
-import { useInsertOrder } from "@api/orders";
-import { useInsertOrderItems } from "@api/order-items";
+import { useInsertOrder } from "@/api/orders";
+import { useInsertOrderItems } from "@/api/order-items";
 import { useRouter } from "expo-router";
-import { initializePaymentSheet, openPaymentSheet } from "@lib/client/stripe";
+import { initializePaymentSheet, openPaymentSheet } from "@/lib/client/stripe";
 
 type CartType = {
   items: CartItem[];

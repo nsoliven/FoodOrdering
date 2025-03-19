@@ -7,14 +7,14 @@ import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 
 // Data and types
-import { defaultPizzaImage } from '@components/ProdcutsListItem';
-import { PizzaSize } from '@src/types';
-import Colors from '@constants/Colors';
+import { defaultPizzaImage } from '@/components/ProdcutsListItem';
+import { PizzaSize } from '@/types';
+import Colors from '@/constants/Colors';
 
 // Providers
-import { useCart } from '@providers/CartProvider';
-import { useProduct } from '@api/products';
-import RemoteImage from '@components/RemoteImage';
+import { useCart } from '@/providers/CartProvider';
+import { useProduct } from '@/api/products';
+import RemoteImage from '@/components/RemoteImage';
 
 const ProductDetailsScreen = () => {
   // Move ALL hooks to the top level before any conditional returns

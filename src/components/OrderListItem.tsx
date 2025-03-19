@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { Tables } from '@src/types';
+import { Tables } from '@/types';
 import { Link, useSegments } from 'expo-router';
-import Colors from '@constants/Colors';
+import Colors from '@/constants/Colors';
 import dayjs from 'dayjs';
 
 type OrderListItemProps = {
