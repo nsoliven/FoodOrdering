@@ -2,10 +2,11 @@ import { createContext, PropsWithChildren, useContext, useEffect, useState } fro
 import { View, Text } from 'react-native'
 import { supabase } from '@lib/supabase'
 import { Session } from '@supabase/supabase-js';
+import { Profile } from '../types'; // Import the proper Profile type
 
 type AuthData = {
   session: Session | null;
-  profile: any;
+  profile: Profile | null; // Use the Profile type instead of any
   loading: boolean;
   isAdmin: boolean;
 }
@@ -19,8 +20,8 @@ const AuthContext = createContext<AuthData>({
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
   const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState<Profile | null>(null); // Properly type the profile state
   
   useEffect(() => {
     const fetchSession = async () => {
