@@ -8,6 +8,7 @@ import Colors from '@constants/Colors';
 
 import { OrderStatus, OrderStatusList as OrderStatusListTypes } from '@src/types';
 import { useOrderDetails, useUpdateOrder } from '@api/orders';
+import { useUpdateOrderSubscription } from '@api/orders/subscriptions';
 
 export default function OrderDetailScreen() {
   const { id: idString } = useLocalSearchParams();
@@ -15,6 +16,8 @@ export default function OrderDetailScreen() {
 
   const { data: order, isLoading, error } = useOrderDetails(id);
   const { mutate: updateOrder } = useUpdateOrder();
+
+  useUpdateOrderSubscription(id);
 
   const updateStatus = (status: OrderStatus) => {
     Alert.alert(

@@ -1,6 +1,6 @@
 // React imports
 import { useState } from 'react';
-import { View, Text, StyleSheet, Image, Pressable, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
 
 // Expo and Navigation
 import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
@@ -14,6 +14,7 @@ import Colors from '@constants/Colors';
 // Providers
 import { useCart } from '@providers/CartProvider';
 import { useProduct } from '@api/products';
+import RemoteImage from '@components/RemoteImage';
 
 const ProductDetailsScreen = () => {
   // Move ALL hooks to the top level before any conditional returns
@@ -60,13 +61,14 @@ const ProductDetailsScreen = () => {
         ),
       }}/>
       <Stack.Screen options={{ title: product.name }} />
-      <Image
-        source={{ uri: product.image || defaultPizzaImage }}
+      <RemoteImage
+        path={product.image}
+        fallback={defaultPizzaImage}
         style={styles.image}
         resizeMode="contain"
       />
-      
       <Text style={styles.price}>Price: ${product.price.toFixed(2)}</Text>
+      <Text style={styles.subtitle}>Size: {selectedSize}</Text>
     </View>
   );
 };
