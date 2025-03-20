@@ -1,21 +1,49 @@
 # Food Ordering App
 
-This project is based on a YouTube tutorial. You can follow along with the tutorial [here](https://www.youtube.com/watch?v=rIYzLhkG9TA&t=21576s). The project is being further developed after the tutorial.
+This project is based on a comprehensive YouTube tutorial on Full Stack Mobile Development using React Native and Supabase. The original tutorial guides you through building a complete food ordering application with both frontend and backend functionality which can be found [here](https://www.youtube.com/watch?v=rIYzLhkG9TA)
 
-## Added Features
+## Project Overview
 
-1. Loading indicators for asynchronous functions.
-2. Try-catches for asynchronous code with image selection.
-3. Fixed images not being shown with image picker initially.
-4. Added cart items minimum check.
-5. No orders found page.
+## Major Enhancements
 
-### Larger Features
+**Password Reset System**
+- Complete password reset flow with verification codes
+- Custom Supabase integration with secure reset process
+- Implementation includes:
+  
+  **Client-Side Components:**
+  - `src/api/auth/index.ts`
+  - `src/app/(auth)/forgot-password`
+  - `src/app/(auth)/new-password`
+  - `src/app/(auth)/verify-reset-code`
+  
+  **Server-Side Components:**
+  - `src/app/api/auth/reset+api.ts`
 
-6. Index page revamp for when the user is an admin.
-7. Profile page revamp for showing user info.
+**User Profile Improvements**
+- Revamped profile page with enhanced user information display
+- Improved user interface and experience
 
-### Notes on deployment
-```zsh
-npx expo export --platform web
-```
+**API Architecture Upgrade**
+- Products now managed through dedicated Expo API Route
+- API endpoints located at `/src/app/api/products`
+- Improved data flow and separation of concerns
+
+
+## Enhanced Features
+
+**Core Improvements:**
+- Loading indicators for all asynchronous operations
+- Error handling with try-catch blocks for image selection
+- Fixed image display issues with the image picker
+- Added validation for minimum cart items
+- Empty state for "No orders found"
+- Enhanced checkout process with safeguards
+- Consistent loading indicators throughout the application
+
+The base application from the tutorial includes:
+- User interface for browsing and ordering food
+- Admin dashboard for managing products and orders
+- Supabase integration for backend functionality
+- Authentication and user management
+- Real-time data updates with subscriptions

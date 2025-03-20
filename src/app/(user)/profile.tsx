@@ -5,11 +5,11 @@ import supabase from '@/lib/client/supabase';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '@/providers/AuthProvider';
-import { Redirect } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 
 const ProfileScreen = () => {
   // Use the auth context instead of managing authentication state locally
-  const { session, profile, loading: authLoading } = useAuth();
+  const { session, profile, loading: authLoading, logout } = useAuth();
   
   // Only maintain UI-specific state in the component
   const [loggingOut, setLoggingOut] = useState(false);
@@ -28,11 +28,19 @@ const ProfileScreen = () => {
           onPress: async () => {
             try {
               setLoggingOut(true);
-              // Just sign out - the AuthProvider will handle the session update
-              await supabase.auth.signOut();
-              // No navigation needed here - let the app's routing handle this
+              
+              // Just call logout without navigation - let auth state handle routing
+              const { success, error } = await logout();
+              
+              if (!success) {
+                throw new Error(error);
+              }
+              
+              // Don't navigate here - let auth state changes handle navigation
+              router.push('/(auth)/sign-in');
+              
             } catch (error) {
-              console.error('Error logging out:', error instanceof Error ? error.message : error);
+              console.error('Error during logout:', error instanceof Error ? error.message : error);
               Alert.alert("Error", "Failed to log out. Please try again.");
             } finally {
               setLoggingOut(false);

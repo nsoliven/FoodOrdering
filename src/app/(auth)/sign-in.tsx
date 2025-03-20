@@ -97,7 +97,7 @@ const LoginScreen = () => {
           disabled={loading}
         />
         
-        <Text style={styles.forgotPassword}>Forgot password?</Text>
+        <Text style={styles.forgotPassword} onPress={() => router.push('/(auth)/forgot-password')}>Forgot password?</Text>
         
         <View style={styles.signupContainer}>
           <Text style={styles.signupText}>Don't have an account? </Text>
