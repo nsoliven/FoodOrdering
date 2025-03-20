@@ -78,7 +78,7 @@ nevryks@m1p-nv ~ % curl http://localhost:8081/api/products | jq
 - Enhanced checkout process with safeguards
 - Consistent loading indicators throughout the application
 - Improved notification system for order updates
-  - `/src/lib/client/notifications.tsx
+  - `/src/lib/client/notifications.tsx`
 
 The base application from the tutorial includes:
 - User interface for browsing and ordering food
@@ -89,4 +89,5 @@ The base application from the tutorial includes:
 
 
 ## Table Visualizer
-<img width="1242" alt="image" src="https://github.com/user-attachments/assets/749b24dc-f0a4-4760-bb08-b1279f1e6932" />
+<img width="1000" alt="image" src="https://github.com/user-attachments/assets/82c9720c-56e7-4922-991e-72768c2d1b4c" />
+
